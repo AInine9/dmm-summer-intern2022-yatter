@@ -21,7 +21,7 @@ func NewStatus(db *sqlx.DB) repository.Status {
 	return &status{db: db}
 }
 
-func (r *status) CreateStatus(ctx context.Context, status *object.Status, account *object.Account) error {
+func (r *status) AddStatus(ctx context.Context, status *object.Status, account *object.Account) error {
 	_, err := r.db.ExecContext(ctx, "insert into status (account_id, content) values (?, ?)", account.ID, status.Status)
 	if err != nil {
 		return fmt.Errorf("%w", err)
@@ -29,7 +29,7 @@ func (r *status) CreateStatus(ctx context.Context, status *object.Status, accoun
 	return err
 }
 
-func (r *status) GetStatus(ctx context.Context, id int) (*object.Status, error) {
+func (r *status) FindStatusByID(ctx context.Context, id int) (*object.Status, error) {
 	entity := new(object.Status)
 	err := r.db.QueryRowxContext(ctx, "select * from status where id = ?", id).StructScan(entity)
 	fmt.Println(id)

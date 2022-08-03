@@ -28,7 +28,7 @@ func (h handler) Get(w http.ResponseWriter, r *http.Request) {
 
 	statusRepo := h.app.Dao.Status()
 	var status *object.Status
-	status, err = statusRepo.GetStatus(ctx, id)
+	status, err = statusRepo.FindStatusByID(ctx, id)
 	if err != nil {
 		httperror.InternalServerError(w, err)
 	}

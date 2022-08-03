@@ -31,7 +31,7 @@ func (h *handler) Create(w http.ResponseWriter, r *http.Request) {
 	account := auth.AccountOf(r)
 
 	statusRepo := h.app.Dao.Status()
-	statusRepo.CreateStatus(ctx, status, account)
+	statusRepo.AddStatus(ctx, status, account)
 
 	w.Header().Set("Content-Type", "application/json")
 	if err := json.NewEncoder(w).Encode(status); err != nil {
