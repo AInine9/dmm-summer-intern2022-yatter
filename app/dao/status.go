@@ -1,0 +1,28 @@
+package dao
+
+import (
+	"context"
+	"fmt"
+	"yatter-backend-go/app/domain/object"
+	"yatter-backend-go/app/domain/repository"
+
+	"github.com/jmoiron/sqlx"
+)
+
+type (
+	status struct {
+		db *sqlx.DB
+	}
+)
+
+func NewStatus(db *sqlx.DB) repository.Status {
+	return &status{db: db}
+}
+
+func (r *status) CreateStatus(ctx context.Context, status *object.Status, account *object.Account) error {
+	_, err := r.db.ExecContext(ctx, "insert into status (account_id, content) values (?, ?)", account.ID, status.Status)
+	if err != nil {
+		return fmt.Errorf("%w", err)
+	}
+	return err
+}
