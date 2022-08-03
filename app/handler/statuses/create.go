@@ -33,6 +33,8 @@ func (h *handler) Create(w http.ResponseWriter, r *http.Request) {
 	statusRepo := h.app.Dao.Status()
 	statusRepo.AddStatus(ctx, status, account)
 
+	status.Account = *account
+
 	w.Header().Set("Content-Type", "application/json")
 	if err := json.NewEncoder(w).Encode(status); err != nil {
 		httperror.InternalServerError(w, err)
