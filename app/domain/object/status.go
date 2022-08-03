@@ -4,11 +4,13 @@ type (
 	StatusID = int64
 
 	Status struct {
-		ID StatusID `json:"-"`
+		ID StatusID `json:"id"`
 
-		AccountID AccountID `json:"account_id,omitempty" db:"account_id"`
+		AccountID AccountID `json:"-" db:"account_id"`
 
-		Status string `json:"status" db:"content"`
+		Account Account `json:"account"`
+
+		Status string `json:"content" db:"content"`
 
 		CreateAt DateTime `json:"create_at,omitempty" db:"create_at"`
 	}

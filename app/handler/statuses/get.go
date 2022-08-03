@@ -33,6 +33,15 @@ func (h handler) Get(w http.ResponseWriter, r *http.Request) {
 		httperror.InternalServerError(w, err)
 	}
 
+	accountRepo := h.app.Dao.Account()
+	var account *object.Account
+	var account_id = status.AccountID
+	account, err = accountRepo.FindAccountByID(ctx, account_id)
+	if err != nil {
+		httperror.InternalServerError(w, err)
+	}
+	status.Account = *account
+
 	w.Header().Set("Content-Type", "applicatin/json")
 	if err := json.NewEncoder(w).Encode(status); err != nil {
 		httperror.InternalServerError(w, err)
