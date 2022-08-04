@@ -41,3 +41,16 @@ func (r *status) FindStatusByID(ctx context.Context, id int) (*object.Status, er
 	}
 	return entity, nil
 }
+
+func (r *status) FindAllStatus(ctx context.Context) ([]*object.Status, error) {
+	var entities []*object.Status
+	err := r.db.SelectContext(ctx, &entities, "select * from status")
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil
+		}
+
+		return nil, fmt.Errorf("%w", err)
+	}
+	return entities, nil
+}
