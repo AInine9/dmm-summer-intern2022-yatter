@@ -59,8 +59,8 @@ func (h handler) Get(w http.ResponseWriter, r *http.Request) {
 
 	accountRepo := h.app.Dao.Account()
 	for _, s := range timelines {
-		account_id := s.AccountID
-		account, err := accountRepo.FindAccountByID(ctx, account_id)
+		accountId := s.AccountID
+		account, err := accountRepo.FindAccountByID(ctx, accountId)
 		if err != nil {
 			httperror.InternalServerError(w, err)
 			return

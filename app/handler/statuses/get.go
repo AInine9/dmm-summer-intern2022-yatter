@@ -15,13 +15,13 @@ import (
 func (h handler) Get(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
-	id_param := chi.URLParam(r, "id")
+	idParam := chi.URLParam(r, "id")
 	var id int
 	var err error
-	if id_param == "" {
+	if idParam == "" {
 		httperror.BadRequest(w, errors.Errorf("id was not presence"))
 	}
-	id, err = strconv.Atoi(id_param)
+	id, err = strconv.Atoi(idParam)
 	if err != nil {
 		httperror.BadRequest(w, errors.Errorf("id is not a number"))
 	}
@@ -35,8 +35,8 @@ func (h handler) Get(w http.ResponseWriter, r *http.Request) {
 
 	accountRepo := h.app.Dao.Account()
 	var account *object.Account
-	var account_id = status.AccountID
-	account, err = accountRepo.FindAccountByID(ctx, account_id)
+	var accountId = status.AccountID
+	account, err = accountRepo.FindAccountByID(ctx, accountId)
 	if err != nil {
 		httperror.InternalServerError(w, err)
 	}
