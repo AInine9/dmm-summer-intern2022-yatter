@@ -3,6 +3,7 @@ package accounts
 import (
 	"encoding/json"
 	"net/http"
+	"time"
 
 	"yatter-backend-go/app/domain/object"
 	"yatter-backend-go/app/handler/httperror"
@@ -25,6 +26,7 @@ func (h *handler) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	account := new(object.Account)
+	account.CreateAt = object.DateTime{Time: time.Now()}
 	account.Username = req.Username
 	if err := account.SetPassword(req.Password); err != nil {
 		httperror.InternalServerError(w, err)
